@@ -288,5 +288,5 @@ hackbot --provider ollama --model xploiter/pentester
 
 ---
 
-**Author:** Yashab Alam  
+**Organization:** HackBot  
 **Repository:** [github.com/hackbot/hackbot](https://github.com/hackbot/hackbot)
