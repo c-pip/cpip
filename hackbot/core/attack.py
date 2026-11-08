@@ -798,6 +798,12 @@ class AttackMapper:
 
         seen: Set[str] = set()  # Deduplicate: "source:technique_id:source_name"
 
+        # Rule patterns are lowercase ASCII, so lowered ASCII text can be
+        # searched with faster case-sensitive copies of them.
+        lowered_rules = [(re.compile(p.pattern), tech_list, notes)
+                         for p, tech_list, notes in _FINDING_RULES]
+        matched_rules: Dict[str, List[Tuple[List[Tuple[str, str]], str]]] = {}
+
         # Map findings
         for finding in findings:
             text = " ".join([
@@ -812,26 +818,38 @@ class AttackMapper:
 
             severity = finding.get("severity", "Info")
 
-            for pattern, tech_list, notes in _FINDING_RULES:
-                if pattern.search(text):
-                    for tech_id, confidence in tech_list:
-                        technique = TECHNIQUE_MAP.get(tech_id)
-                        if not technique:
-                            continue
+            # Repeated texts reuse the rules matched the first time.
+            matched = matched_rules.get(text)
+            if matched is None:
+                if text.isascii():
+                    haystack, rules = text.lower(), lowered_rules
+                else:
+                    haystack, rules = text, _FINDING_RULES
+                matched = matched_rules[text] = [
+                    (tech_list, notes)
+                    for pattern, tech_list, notes in rules
+                    if pattern.search(haystack)
+                ]
 
-                        dedup_key = f"finding:{tech_id}:{finding.get('title', '')}"
-                        if dedup_key in seen:
-                            continue
-                        seen.add(dedup_key)
+            for tech_list, notes in matched:
+                for tech_id, confidence in tech_list:
+                    technique = TECHNIQUE_MAP.get(tech_id)
+                    if not technique:
+                        continue
 
-                        report.mappings.append(TechniqueMapping(
-                            technique=technique,
-                            source="finding",
-                            source_name=finding.get("title", "Unknown"),
-                            confidence=confidence,
-                            notes=notes,
-                            severity=severity,
-                        ))
+                    dedup_key = f"finding:{tech_id}:{finding.get('title', '')}"
+                    if dedup_key in seen:
+                        continue
+                    seen.add(dedup_key)
+
+                    report.mappings.append(TechniqueMapping(
+                        technique=technique,
+                        source="finding",
+                        source_name=finding.get("title", "Unknown"),
+                        confidence=confidence,
+                        notes=notes,
+                        severity=severity,
+                    ))
 
         # Map tool history
         if tool_history:
