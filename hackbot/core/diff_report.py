@@ -285,27 +285,37 @@ def _finding_fingerprint(finding: Dict[str, Any]) -> str:
     return f"{title}|{desc}|{tool}"
 
 
-def _similarity(fp1: str, fp2: str) -> float:
+def _similarity(
+    fp1: str,
+    fp2: str,
+    parsed: Optional[Dict[str, Tuple[List[str], set[str]]]] = None,
+) -> float:
     """
     Simple token-based similarity between two fingerprints.
     Returns a score between 0.0 and 1.0.
+
+    ``parsed`` optionally caches each fingerprint's parts and title tokens
+    so repeated comparisons skip re-splitting.
     """
-    parts1 = fp1.split("|")
-    parts2 = fp2.split("|")
+    if parsed is None:
+        parsed = {}
+    for fp in (fp1, fp2):
+        if fp not in parsed:
+            parts = fp.split("|")
+            parsed[fp] = (parts, set(parts[0].split()))
+    parts1, tokens1 = parsed[fp1]
+    parts2, tokens2 = parsed[fp2]
 
     # Exact title match → high confidence
     if parts1[0] and parts1[0] == parts2[0]:
         return 1.0
 
     # Token overlap in title
-    tokens1 = set(parts1[0].split())
-    tokens2 = set(parts2[0].split())
     if not tokens1 or not tokens2:
         return 0.0
 
-    intersection = tokens1 & tokens2
-    union = tokens1 | tokens2
-    jaccard = len(intersection) / len(union) if union else 0.0
+    common = len(tokens1 & tokens2)
+    jaccard = common / (len(tokens1) + len(tokens2) - common)
 
     # Boost if same tool
     if parts1[2] and parts1[2] == parts2[2]:
@@ -340,9 +350,10 @@ def _match_findings(
 
     # Build similarity matrix and greedily match best pairs
     scores: List[Tuple[float, int, int]] = []
+    parsed: Dict[str, Tuple[List[str], set[str]]] = {}
     for i, (fp_old, _) in enumerate(old_fps):
         for j, (fp_new, _) in enumerate(new_fps):
-            sim = _similarity(fp_old, fp_new)
+            sim = _similarity(fp_old, fp_new, parsed)
             if sim >= MATCH_THRESHOLD:
                 scores.append((sim, i, j))
 
