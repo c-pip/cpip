@@ -1,0 +1,71 @@
+# ==========================================
+# SwarmDroid Git Ignore Configuration
+# ==========================================
+
+# --- Python & Virtual Environments ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+*.sqlite3
+*.db
+swarmdroid_memory.db
+
+# --- Android & Gradle ---
+.gradle/
+**/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+android/captures/
+.cxx/
+
+# APK and AAB build outputs (keep release assets out of git history)
+*.apk
+*.ap_
+*.aab
+
+# Keystore files
+*.jks
+*.keystore
+
+# --- IDE & Editors ---
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Secrets & Environment Variables ---
+.env
+.env.local
+*.pem
+*.key
