@@ -5,11 +5,11 @@
   <br>
   <em>"One companion. An entire swarm of intelligence."</em>
   <br><br>
-  <a href="https://alaika-cyber.github.io/swarmdroid-/"><img src="https://img.shields.io/badge/Live%20Website-alaika--cyber.github.io%2Fswarmdroid--cyan?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Website"></a>
-  <a href="https://github.com/alaika-cyber/swarmdroid-/releases"><img src="https://img.shields.io/badge/Release-v1.0.0-10B981?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Release"></a>
-  <a href="https://github.com/alaika-cyber/swarmdroid-/raw/main/app-debug.apk"><img src="https://img.shields.io/badge/Download%20APK-v1.0.0%20Debug-B892FF?style=for-the-badge&logo=android&logoColor=white" alt="Download APK"></a>
-  <a href="https://alaika-cyber.github.io/swarmdroid-/"><img src="https://img.shields.io/badge/CA-Soon%20Available-F59E0B?style=for-the-badge&logo=coinbase&logoColor=black" alt="CA Soon Available"></a>
-  <a href="https://github.com/alaika-cyber/swarmdroid-/actions"><img src="https://img.shields.io/badge/GitHub%20Pages-Automated%20CI%2FCD-00F5D4?style=for-the-badge&logo=githubactions&logoColor=black" alt="CI/CD"></a>
+  <a href="https://swarm-droid.github.io/swarmdroid/"><img src="https://img.shields.io/badge/Live%20Website-swarm--droid.github.io%2Fswarmdroid-cyan?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Website"></a>
+  <a href="https://github.com/swarm-droid/swarmdroid/releases"><img src="https://img.shields.io/badge/Release-v1.0.0-10B981?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Release"></a>
+  <a href="https://github.com/swarm-droid/swarmdroid/raw/main/app-debug.apk"><img src="https://img.shields.io/badge/Download%20APK-v1.0.0%20Debug-B892FF?style=for-the-badge&logo=android&logoColor=white" alt="Download APK"></a>
+  <a href="https://swarm-droid.github.io/swarmdroid/"><img src="https://img.shields.io/badge/CA-Soon%20Available-F59E0B?style=for-the-badge&logo=coinbase&logoColor=black" alt="CA Soon Available"></a>
+  <a href="https://github.com/swarm-droid/swarmdroid/actions"><img src="https://img.shields.io/badge/GitHub%20Pages-Automated%20CI%2FCD-00F5D4?style=for-the-badge&logo=githubactions&logoColor=black" alt="CI/CD"></a>
 </p>
 
 ---
@@ -18,10 +18,10 @@
 
 Rather than presenting users with a generic chatbot or a static loading spinner, SwarmDroid provides an interactive 3D robot companion that **blinks, breathes, walks, waves, talks, and reacts emotionally**, visually communicating what a collaborative swarm of specialized AI agents is doing in real-time.
 
-🌐 **Product Website:** [https://alaika-cyber.github.io/swarmdroid-/](https://alaika-cyber.github.io/swarmdroid-/)  
+🌐 **Product Website:** [https://swarm-droid.github.io/swarmdroid/](https://swarm-droid.github.io/swarmdroid/)  
 📱 **Android APK Deliverable:** [Download `app-debug.apk`](app-debug.apk) (18.5 MB, API 34+ Ready)  
 🪙 **Contract Address (CA):** `Soon Available` (Official launch will be announced exclusively on this repository and the official website. Beware of fake tokens)  
-📦 **Latest Release:** [v1.0.0 Release](https://github.com/alaika-cyber/swarmdroid-/releases)
+📦 **Latest Release:** [v1.0.0 Release](https://github.com/swarm-droid/swarmdroid/releases)
 
 ---
 

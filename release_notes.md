@@ -8,7 +8,7 @@ We are thrilled to present the initial official release of **SwarmDroid** — an
 
 ## 🪙 Contract Address (CA) Notice
 - **Status:** `CA Soon Available`
-- **Notice:** The official token smart contract address will be announced **exclusively** on this GitHub repository and the [official website](https://alaika-cyber.github.io/swarmdroid-/). Beware of fake tokens, copycats, or impersonators.
+- **Notice:** The official token smart contract address will be announced **exclusively** on this GitHub repository and the [official website](https://swarm-droid.github.io/swarmdroid/). Beware of fake tokens, copycats, or impersonators.
 
 ---
 
@@ -56,5 +56,5 @@ We are thrilled to present the initial official release of **SwarmDroid** — an
 ---
 
 ## 🌐 Official Links
-- **Website:** [https://alaika-cyber.github.io/swarmdroid-/](https://alaika-cyber.github.io/swarmdroid-/)
-- **Repository:** [alaika-cyber/swarmdroid-](https://github.com/alaika-cyber/swarmdroid-)
+- **Website:** [https://swarm-droid.github.io/swarmdroid/](https://swarm-droid.github.io/swarmdroid/)
+- **Repository:** [swarm-droid/swarmdroid](https://github.com/swarm-droid/swarmdroid)
