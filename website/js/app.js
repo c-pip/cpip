@@ -22,11 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Smooth Scrolling for Navigation Links ---
+  // --- Smooth Scrolling for Navigation Links & Brand Logo ---
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      if (targetId === '#') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         e.preventDefault();
