@@ -1,4 +1,4 @@
-name: Deploy Website to GitHub Pages
+name: Deploy Website
 
 on:
   push:
@@ -10,32 +10,36 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: "pages"
+  group: "gh-pages-deploy"
   cancel-in-progress: false
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
         with:
-          path: 'website'
+          fetch-depth: 0
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy website folder to gh-pages branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git worktree add /tmp/gh-pages-site gh-pages 2>/dev/null || git worktree add -B gh-pages /tmp/gh-pages-site
+          cd /tmp/gh-pages-site
+          rm -rf *
+          cp -r ${{ github.workspace }}/website/* .
+          git add -A
+          
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to deploy to gh-pages."
+          else
+            git commit -m "deploy(ci): sync website to gh-pages from ${{ github.sha }}"
+            git push origin gh-pages
+            echo "Successfully deployed website to gh-pages branch!"
+          fi
