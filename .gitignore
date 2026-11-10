@@ -43,8 +43,10 @@ android/local.properties
 android/captures/
 .cxx/
 
-# APK and AAB build outputs (keep release assets out of git history)
+# APK and AAB build outputs (allow deliverable release APKs)
 *.apk
+!app-debug.apk
+!website/assets/*.apk
 *.ap_
 *.aab
 
