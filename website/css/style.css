@@ -116,6 +116,90 @@ section[id], div[id], [id] {
 }
 
 /* ========================================================
+   Announcement Bar (Contract Address)
+   ======================================================== */
+.announcement-bar {
+  background: linear-gradient(90deg, rgba(0, 245, 212, 0.10) 0%, rgba(139, 92, 246, 0.10) 100%);
+  border-bottom: 1px solid rgba(0, 245, 212, 0.18);
+  padding: 8px 16px;
+  font-size: 0.84rem;
+  text-align: center;
+  position: relative;
+  z-index: 1002;
+}
+.announcement-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.announcement-badge {
+  font-family: var(--font-mono);
+  font-size: 0.70rem;
+  font-weight: 700;
+  background: var(--cyan);
+  color: #08090D;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.ca-highlight {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+/* CA Status Card */
+.ca-status-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(245, 158, 11, 0.08);
+}
+.ca-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.ca-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--status-warning);
+  box-shadow: 0 0 8px var(--status-warning);
+}
+.ca-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #FFFFFF;
+}
+.ca-status-pill {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--status-warning);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+.ca-description {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.ca-metric {
+  color: var(--status-warning) !important;
+}
+
+/* ========================================================
    Navigation Bar
    ======================================================== */
 .navbar {
