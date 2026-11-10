@@ -258,14 +258,18 @@ class Companion3DViewer {
   }
 
   initEvents() {
-    // Window Resize
-    window.addEventListener('resize', () => {
+    // Window Resize + Orientation Change
+    const handleResize = () => {
       const w = this.container.clientWidth;
       const h = this.container.clientHeight;
+      if (w === 0 || h === 0) return;
       this.camera.aspect = w / h;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(w, h);
-    });
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', () => setTimeout(handleResize, 150));
 
     // Mouse / Touch Drag to Rotate
     const onDown = (e) => {
@@ -300,9 +304,23 @@ class Companion3DViewer {
     window.addEventListener('touchmove', onMove, { passive: true });
     window.addEventListener('touchend', onUp);
 
-    // Click to Celebrate Tap
+    // Click / Touch to Celebrate Tap (only if not dragged)
+    let dragStartPos = { x: 0, y: 0 };
+    const recordStartPos = (e) => {
+      const clientX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      const clientY = e.clientY !== undefined ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+      dragStartPos = { x: clientX, y: clientY };
+    };
+    this.container.addEventListener('mousedown', recordStartPos);
+    this.container.addEventListener('touchstart', recordStartPos, { passive: true });
+
     this.container.addEventListener('click', (e) => {
-      if (this.currentEmotion !== 'CELEBRATING') {
+      const clientX = e.clientX || 0;
+      const clientY = e.clientY || 0;
+      const dx = clientX - dragStartPos.x;
+      const dy = clientY - dragStartPos.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 12 && this.currentEmotion !== 'CELEBRATING') {
         this.setEmotion('CELEBRATING');
         setTimeout(() => this.setEmotion('HAPPY'), 3500);
       }

@@ -38,6 +38,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --- Mobile Menu Toggle ---
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const navLinks = document.getElementById('nav-links');
+  if (mobileMenuBtn && navLinks) {
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      mobileMenuBtn.classList.toggle('active');
+    });
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        mobileMenuBtn.classList.remove('active');
+      });
+    });
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        navLinks.classList.remove('open');
+        mobileMenuBtn.classList.remove('active');
+      }
+    });
+  }
+
   // --- Console Greeting ---
   console.log(
     '%c🤖 SwarmDroid Online',

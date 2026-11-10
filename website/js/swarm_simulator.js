@@ -34,6 +34,10 @@ class SwarmSimulator {
   }
 
   initEvents() {
+    // Responsive canvas sizing
+    this.resizeCanvas();
+    window.addEventListener('resize', () => this.resizeCanvas());
+
     // Preset buttons
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -164,6 +168,25 @@ class SwarmSimulator {
     this.activePackets = [];
   }
 
+  resizeCanvas() {
+    const parent = this.canvas.parentElement;
+    if (!parent) return;
+    const rect = parent.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = Math.max(Math.floor(rect.width), 280);
+    const isMobile = w < 600;
+    const h = isMobile ? Math.max(320, Math.min(Math.floor(w * 0.85), 380)) : Math.min(Math.floor(w * 0.47), 440);
+    this.canvas.width = w * dpr;
+    this.canvas.height = h * dpr;
+    this.canvas.style.width = w + 'px';
+    this.canvas.style.height = h + 'px';
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Update internal rendering dimensions
+    this._renderWidth = w;
+    this._renderHeight = h;
+    this._isMobile = isMobile;
+  }
+
   spawnPacket(fromId, toId) {
     this.activePackets.push({
       fromId,
@@ -179,11 +202,12 @@ class SwarmSimulator {
     this.time += 0.016;
     const t = this.time;
     const ctx = this.ctx;
-    const w = this.canvas.width;
-    const h = this.canvas.height;
+    const w = this._renderWidth || this.canvas.width;
+    const h = this._renderHeight || this.canvas.height;
     const cx = w / 2;
     const cy = h / 2;
-    const orbitRadius = Math.min(w, h) * 0.38;
+    const isMobile = this._isMobile;
+    const orbitRadius = Math.min(w, h) * (isMobile ? 0.35 : 0.38);
 
     ctx.clearRect(0, 0, w, h);
 
@@ -249,15 +273,18 @@ class SwarmSimulator {
     });
 
     // Draw Agent Nodes
+    const scale = isMobile ? 0.78 : 1.0;
     this.agents.forEach(ag => {
+      const radius = ag.isMaster ? (36 * scale) : (22 * scale);
+
       if (ag.status === 'OFFLINE') {
         // Dim placeholder
         ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
         ctx.beginPath();
-        ctx.arc(ag.x, ag.y, ag.radius, 0, Math.PI * 2);
+        ctx.arc(ag.x, ag.y, radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = '#4E5766';
-        ctx.font = '10px JetBrains Mono';
+        ctx.font = isMobile ? '8px JetBrains Mono' : '10px JetBrains Mono';
         ctx.textAlign = 'center';
         ctx.fillText('+ Dynamic', ag.x, ag.y + 3);
         return;
@@ -268,7 +295,7 @@ class SwarmSimulator {
 
       // Outer Pulsing Halo if Working
       if (isWorking) {
-        const pulseR = ag.radius + 8 + Math.sin(t * 8) * 4;
+        const pulseR = radius + 8 + Math.sin(t * 8) * 4;
         ctx.fillStyle = ag.isMaster ? 'rgba(0, 245, 212, 0.20)' : 'rgba(0, 245, 212, 0.25)';
         ctx.beginPath();
         ctx.arc(ag.x, ag.y, pulseR, 0, Math.PI * 2);
@@ -278,31 +305,33 @@ class SwarmSimulator {
       // Base Node
       ctx.fillStyle = '#141721';
       ctx.beginPath();
-      ctx.arc(ag.x, ag.y, ag.radius, 0, Math.PI * 2);
+      ctx.arc(ag.x, ag.y, radius, 0, Math.PI * 2);
       ctx.fill();
 
       // Border Ring
       ctx.strokeStyle = isApproval ? '#FFD166' : (isWorking ? '#00F5D4' : ag.color);
       ctx.lineWidth = ag.isMaster ? 3.5 : 2;
       ctx.beginPath();
-      ctx.arc(ag.x, ag.y, ag.radius, 0, Math.PI * 2);
+      ctx.arc(ag.x, ag.y, radius, 0, Math.PI * 2);
       ctx.stroke();
 
       // Inner Core
       ctx.fillStyle = isApproval ? '#FFD166' : (isWorking ? '#00F5D4' : ag.color);
       ctx.beginPath();
-      ctx.arc(ag.x, ag.y, ag.isMaster ? 10 : 6, 0, Math.PI * 2);
+      ctx.arc(ag.x, ag.y, ag.isMaster ? (10 * scale) : (6 * scale), 0, Math.PI * 2);
       ctx.fill();
 
       // Label
       ctx.fillStyle = '#F0F4F8';
-      ctx.font = ag.isMaster ? 'bold 12px Plus Jakarta Sans' : '11px Plus Jakarta Sans';
+      ctx.font = ag.isMaster 
+        ? (isMobile ? 'bold 11px Plus Jakarta Sans' : 'bold 12px Plus Jakarta Sans')
+        : (isMobile ? '10px Plus Jakarta Sans' : '11px Plus Jakarta Sans');
       ctx.textAlign = 'center';
-      ctx.fillText(ag.name, ag.x, ag.y + ag.radius + 14);
+      ctx.fillText(ag.name, ag.x, ag.y + radius + (isMobile ? 12 : 14));
 
       ctx.fillStyle = '#8E99A8';
-      ctx.font = '9px JetBrains Mono';
-      ctx.fillText(ag.status, ag.x, ag.y + ag.radius + 26);
+      ctx.font = isMobile ? '8px JetBrains Mono' : '9px JetBrains Mono';
+      ctx.fillText(ag.status, ag.x, ag.y + radius + (isMobile ? 22 : 26));
     });
   }
 }
