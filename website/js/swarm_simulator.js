@@ -1,6 +1,6 @@
 /**
  * SwarmDroid Interactive Multi-Agent Swarm Simulator
- * Canvas node-graph simulator demonstrating DAG planning, delegation, and signal passing.
+ * Canvas DAG node graph demonstrator showing planning, signal streaming, and task execution.
  */
 
 class SwarmSimulator {
@@ -22,29 +22,29 @@ class SwarmSimulator {
   initAgents() {
     this.agents = [
       { id: 'master', name: 'Master Agent', role: 'Aegis Prime', x: 0, y: 0, status: 'IDLE', color: '#00F5D4', radius: 36, isMaster: true },
-      { id: 'browser', name: 'Browser', role: 'Aura', angle: 0, status: 'IDLE', color: '#70D6FF', radius: 22 },
-      { id: 'coder', name: 'Coding', role: 'ByteForge', angle: Math.PI / 4, status: 'IDLE', color: '#B892FF', radius: 22 },
-      { id: 'social', name: 'Social Media', role: 'Nexus', angle: Math.PI / 2, status: 'IDLE', color: '#FF70A6', radius: 22 },
-      { id: 'device', name: 'Device', role: 'DroidLink', angle: 3 * Math.PI / 4, status: 'IDLE', color: '#06D6A0', radius: 22 },
-      { id: 'research', name: 'Research', role: 'Chronos', angle: Math.PI, status: 'IDLE', color: '#FFD166', radius: 22 },
-      { id: 'memory', name: 'Memory', role: 'Mnemosyne', angle: 5 * Math.PI / 4, status: 'IDLE', color: '#B892FF', radius: 22 },
-      { id: 'security', name: 'Security', role: 'Aegis Guardian', angle: 3 * Math.PI / 2, status: 'IDLE', color: '#FF5470', radius: 22 },
-      { id: 'dynamic', name: 'Dynamic Agent', role: 'Docs Architect', angle: 7 * Math.PI / 4, status: 'OFFLINE', color: '#E0AAFF', radius: 22, isDynamic: true }
+      { id: 'browser', name: 'Browser', role: 'Aura', angle: 0, status: 'IDLE', color: '#38BDF8', radius: 22 },
+      { id: 'coder', name: 'Coding', role: 'ByteForge', angle: Math.PI / 4, status: 'IDLE', color: '#A78BFA', radius: 22 },
+      { id: 'social', name: 'Social Media', role: 'Nexus', angle: Math.PI / 2, status: 'IDLE', color: '#F472B6', radius: 22 },
+      { id: 'device', name: 'Device', role: 'DroidLink', angle: 3 * Math.PI / 4, status: 'IDLE', color: '#34D399', radius: 22 },
+      { id: 'research', name: 'Research', role: 'Chronos', angle: Math.PI, status: 'IDLE', color: '#FBBF24', radius: 22 },
+      { id: 'memory', name: 'Memory', role: 'Mnemosyne', angle: 5 * Math.PI / 4, status: 'IDLE', color: '#C084FC', radius: 22 },
+      { id: 'security', name: 'Security', role: 'Aegis Guardian', angle: 3 * Math.PI / 2, status: 'IDLE', color: '#F87171', radius: 22 },
+      { id: 'dynamic', name: 'Dynamic Agent', role: 'Docs Architect', angle: 7 * Math.PI / 4, status: 'OFFLINE', color: '#E879F9', radius: 22, isDynamic: true }
     ];
   }
 
   initEvents() {
-    // Responsive canvas sizing
     this.resizeCanvas();
     window.addEventListener('resize', () => this.resizeCanvas());
 
     // Preset buttons
-    document.querySelectorAll('.preset-btn').forEach(btn => {
+    document.querySelectorAll('.preset-pill, .preset-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        this.currentWorkflow = e.target.getAttribute('data-flow');
-        this.log(`Switched preset workflow to: ${e.target.textContent}`, 'info');
+        document.querySelectorAll('.preset-pill, .preset-btn').forEach(b => b.classList.remove('active'));
+        const target = e.currentTarget;
+        target.classList.add('active');
+        this.currentWorkflow = target.getAttribute('data-flow');
+        this.log(`Switched workflow to: ${target.textContent.trim()}`, 'info');
       });
     });
 
@@ -55,13 +55,33 @@ class SwarmSimulator {
     }
   }
 
+  resizeCanvas() {
+    const parent = this.canvas.parentElement;
+    if (!parent) return;
+    const rect = parent.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = Math.max(Math.floor(rect.width), 280);
+    const isMobile = w < 640;
+    const h = isMobile ? Math.max(300, Math.min(Math.floor(w * 0.8), 360)) : Math.min(Math.floor(w * 0.44), 400);
+
+    this.canvas.width = w * dpr;
+    this.canvas.height = h * dpr;
+    this.canvas.style.width = w + 'px';
+    this.canvas.style.height = h + 'px';
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    this._renderWidth = w;
+    this._renderHeight = h;
+    this._isMobile = isMobile;
+  }
+
   log(msg, type = 'info') {
     if (!this.logStream) return;
     const entry = document.createElement('div');
-    entry.className = `log-entry ${type}`;
+    entry.className = `log-line ${type}`;
     const now = new Date();
     const timeStr = `[${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}.${String(Math.floor(now.getMilliseconds() / 10)).padStart(2, '0')}]`;
-    entry.innerHTML = `<span class="time">${timeStr}</span> ${msg}`;
+    entry.innerHTML = `<span class="log-time">${timeStr}</span> ${msg}`;
     this.logStream.appendChild(entry);
     this.logStream.scrollTop = this.logStream.scrollHeight;
   }
@@ -71,47 +91,40 @@ class SwarmSimulator {
     const master = this.agents[0];
     master.status = 'WORKING';
 
-    // Trigger companion state
-    if (window.mascot3D) {
-      window.mascot3D.setEmotion('THINKING');
-    }
-
     if (this.currentWorkflow === 'research_social') {
       this.log('👑 Master Agent deconstructing goal: "Research latest Android AI and draft X post"', 'active');
 
       setTimeout(() => {
         this.spawnPacket('master', 'browser');
         this.setAgentStatus('browser', 'WORKING');
-        this.log('🌐 Browser Agent dispatched: Searching web for latest Android AI frameworks...', 'active');
+        this.log('🌐 Browser Agent dispatched: Crawling web documentation...', 'active');
       }, 700);
 
       setTimeout(() => {
         this.setAgentStatus('browser', 'COMPLETED');
-        this.log('✓ Browser Agent: Extracted 4 verified technical articles.', 'success');
+        this.log('✓ Browser Agent: Extracted 4 technical benchmarks.', 'success');
         this.spawnPacket('browser', 'research');
         this.setAgentStatus('research', 'WORKING');
-        this.log('🔬 Research Agent: Fact-checking and synthesizing research summary...', 'active');
+        this.log('🔬 Research Agent: Fact-checking and synthesizing summary...', 'active');
       }, 2200);
 
       setTimeout(() => {
         this.setAgentStatus('research', 'COMPLETED');
-        this.log('✓ Research Agent: Knowledge stored in shared memory vector index.', 'success');
+        this.log('✓ Research Agent: Stored knowledge in shared vector index.', 'success');
         this.spawnPacket('research', 'social');
         this.setAgentStatus('social', 'WORKING');
-        this.log('📱 Social Media Agent: Drafting high-converting X post with hashtags...', 'active');
+        this.log('📱 Social Media Agent: Drafting publication text and hashtags...', 'active');
       }, 3800);
 
       setTimeout(() => {
         this.setAgentStatus('social', 'APPROVAL');
-        this.log('🛡️ Security Agent: Tool "post_social_media" requires Human Approval.', 'approval');
-        if (window.mascot3D) window.mascot3D.setEmotion('LISTENING');
+        this.log('🛑 Security Agent: Tool "post_social_media" triggered Human Approval Gate.', 'approval');
       }, 5200);
 
       setTimeout(() => {
         this.setAgentStatus('social', 'COMPLETED');
         master.status = 'COMPLETED';
-        this.log('🎉 Human approved action! Post staged and swarm task completed!', 'success');
-        if (window.mascot3D) window.mascot3D.setEmotion('CELEBRATING');
+        this.log('🎉 Human verified action! Task successfully completed by swarm.', 'success');
       }, 6800);
 
     } else if (this.currentWorkflow === 'code_debug') {
@@ -120,22 +133,21 @@ class SwarmSimulator {
       setTimeout(() => {
         this.spawnPacket('master', 'coder');
         this.setAgentStatus('coder', 'WORKING');
-        this.log('💻 Coding Agent: Generating solution in safe Python sandbox...', 'active');
+        this.log('💻 Coding Agent: Generating solution in isolated Python sandbox...', 'active');
       }, 700);
 
       setTimeout(() => {
         this.setAgentStatus('coder', 'COMPLETED');
-        this.log('✓ Coding Agent: Code syntax verified clean, sandbox executed with zero errors.', 'success');
+        this.log('✓ Coding Agent: Code syntax verified clean, zero sandbox errors.', 'success');
         this.spawnPacket('coder', 'security');
         this.setAgentStatus('security', 'WORKING');
-        this.log('🛡️ Security Agent: Scanning generated artifact for prompt injection/exfiltration...', 'active');
+        this.log('🛡️ Security Agent: Scanning artifact for prompt injection/exfiltration...', 'active');
       }, 2400);
 
       setTimeout(() => {
         this.setAgentStatus('security', 'COMPLETED');
         master.status = 'COMPLETED';
-        this.log('🎉 All code integrity checks passed! Swarm finalized solution.', 'success');
-        if (window.mascot3D) window.mascot3D.setEmotion('CELEBRATING');
+        this.log('🎉 All security validations passed! Execution verified.', 'success');
       }, 4000);
 
     } else if (this.currentWorkflow === 'dynamic_agent') {
@@ -151,7 +163,6 @@ class SwarmSimulator {
         this.setAgentStatus('dynamic', 'COMPLETED');
         master.status = 'COMPLETED';
         this.log('🎉 Dynamically spawned agent successfully finalized Markdown specification!', 'success');
-        if (window.mascot3D) window.mascot3D.setEmotion('CELEBRATING');
       }, 3200);
     }
   }
@@ -166,25 +177,6 @@ class SwarmSimulator {
       a.status = a.id === 'dynamic' ? 'OFFLINE' : 'IDLE';
     });
     this.activePackets = [];
-  }
-
-  resizeCanvas() {
-    const parent = this.canvas.parentElement;
-    if (!parent) return;
-    const rect = parent.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = Math.max(Math.floor(rect.width), 280);
-    const isMobile = w < 600;
-    const h = isMobile ? Math.max(320, Math.min(Math.floor(w * 0.85), 380)) : Math.min(Math.floor(w * 0.47), 440);
-    this.canvas.width = w * dpr;
-    this.canvas.height = h * dpr;
-    this.canvas.style.width = w + 'px';
-    this.canvas.style.height = h + 'px';
-    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    // Update internal rendering dimensions
-    this._renderWidth = w;
-    this._renderHeight = h;
-    this._isMobile = isMobile;
   }
 
   spawnPacket(fromId, toId) {
@@ -218,7 +210,7 @@ class SwarmSimulator {
     ctx.arc(cx, cy, orbitRadius, 0, Math.PI * 2);
     ctx.stroke();
 
-    ctx.strokeStyle = 'rgba(184, 146, 255, 0.05)';
+    ctx.strokeStyle = 'rgba(139, 92, 246, 0.05)';
     ctx.beginPath();
     ctx.arc(cx, cy, orbitRadius * 0.6, 0, Math.PI * 2);
     ctx.stroke();
@@ -256,15 +248,14 @@ class SwarmSimulator {
         const px = from.x + (to.x - from.x) * pkt.progress;
         const py = from.y + (to.y - from.y) * pkt.progress;
 
-        // Packet glow
         ctx.fillStyle = 'rgba(0, 245, 212, 0.35)';
         ctx.beginPath();
-        ctx.arc(px, py, 9, 0, Math.PI * 2);
+        ctx.arc(px, py, 8, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = '#00F5D4';
         ctx.beginPath();
-        ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+        ctx.arc(px, py, 4, 0, Math.PI * 2);
         ctx.fill();
       }
       if (pkt.progress >= 1) {
@@ -278,7 +269,6 @@ class SwarmSimulator {
       const radius = ag.isMaster ? (36 * scale) : (22 * scale);
 
       if (ag.status === 'OFFLINE') {
-        // Dim placeholder
         ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
         ctx.beginPath();
         ctx.arc(ag.x, ag.y, radius, 0, Math.PI * 2);
@@ -293,7 +283,7 @@ class SwarmSimulator {
       const isWorking = ag.status === 'WORKING';
       const isApproval = ag.status === 'APPROVAL';
 
-      // Outer Pulsing Halo if Working
+      // Outer Pulsing Halo
       if (isWorking) {
         const pulseR = radius + 8 + Math.sin(t * 8) * 4;
         ctx.fillStyle = ag.isMaster ? 'rgba(0, 245, 212, 0.20)' : 'rgba(0, 245, 212, 0.25)';
@@ -303,33 +293,33 @@ class SwarmSimulator {
       }
 
       // Base Node
-      ctx.fillStyle = '#141721';
+      ctx.fillStyle = '#0F121B';
       ctx.beginPath();
       ctx.arc(ag.x, ag.y, radius, 0, Math.PI * 2);
       ctx.fill();
 
       // Border Ring
-      ctx.strokeStyle = isApproval ? '#FFD166' : (isWorking ? '#00F5D4' : ag.color);
+      ctx.strokeStyle = isApproval ? '#F59E0B' : (isWorking ? '#00F5D4' : ag.color);
       ctx.lineWidth = ag.isMaster ? 3.5 : 2;
       ctx.beginPath();
       ctx.arc(ag.x, ag.y, radius, 0, Math.PI * 2);
       ctx.stroke();
 
       // Inner Core
-      ctx.fillStyle = isApproval ? '#FFD166' : (isWorking ? '#00F5D4' : ag.color);
+      ctx.fillStyle = isApproval ? '#F59E0B' : (isWorking ? '#00F5D4' : ag.color);
       ctx.beginPath();
       ctx.arc(ag.x, ag.y, ag.isMaster ? (10 * scale) : (6 * scale), 0, Math.PI * 2);
       ctx.fill();
 
       // Label
-      ctx.fillStyle = '#F0F4F8';
+      ctx.fillStyle = '#F3F4F6';
       ctx.font = ag.isMaster 
         ? (isMobile ? 'bold 11px Plus Jakarta Sans' : 'bold 12px Plus Jakarta Sans')
         : (isMobile ? '10px Plus Jakarta Sans' : '11px Plus Jakarta Sans');
       ctx.textAlign = 'center';
       ctx.fillText(ag.name, ag.x, ag.y + radius + (isMobile ? 12 : 14));
 
-      ctx.fillStyle = '#8E99A8';
+      ctx.fillStyle = '#9CA3AF';
       ctx.font = isMobile ? '8px JetBrains Mono' : '9px JetBrains Mono';
       ctx.fillText(ag.status, ag.x, ag.y + radius + (isMobile ? 22 : 26));
     });
