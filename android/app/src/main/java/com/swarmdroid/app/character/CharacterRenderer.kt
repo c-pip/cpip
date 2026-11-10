@@ -79,79 +79,130 @@ class CharacterRenderer(private val context: Context) : GLSurfaceView.Renderer {
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
         Matrix.translateM(modelMatrix, 0, 0f, -0.05f, 0f)
-        Matrix.scaleM(modelMatrix, 0, 0.32f, 0.35f, 0.30f)
-        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.1f)
+        Matrix.scaleM(modelMatrix, 0, 0.33f, 0.36f, 0.30f)
+        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.15f)
 
-        // 2. Chest Swarm Reactor (Electric Cyan Glow)
+        // 2. Chest Swarm Arc Reactor & Bezel (Electric Cyan Glow)
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
         Matrix.translateM(modelMatrix, 0, 0f, -0.02f, 0.29f)
-        Matrix.scaleM(modelMatrix, 0, 0.08f, 0.08f, 0.04f)
-        drawSphere(color = floatArrayOf(0.0f, 0.96f, 0.83f, 1.0f), emissive = pose.glowIntensity)
+        Matrix.scaleM(modelMatrix, 0, 0.085f, 0.085f, 0.04f)
+        drawSphere(color = floatArrayOf(0.0f, 0.96f, 0.83f, 1.0f), emissive = pose.glowIntensity * 1.8f)
 
-        // 3. Head (White Ceramic Sphere)
+        // 3. Magnetic Floating Neck Collar (Dark Carbon Fiber)
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
-        Matrix.translateM(modelMatrix, 0, 0f, 0.52f, 0f)
-        Matrix.rotateM(modelMatrix, 0, pose.headTiltX * 57.3f, 1f, 0f, 0f)
-        Matrix.rotateM(modelMatrix, 0, pose.headTiltZ * 57.3f, 0f, 0f, 1f)
-        Matrix.scaleM(modelMatrix, 0, 0.44f, 0.42f, 0.42f)
-        drawSphere(color = floatArrayOf(0.95f, 0.96f, 0.98f, 1.0f), emissive = 0.05f)
+        Matrix.translateM(modelMatrix, 0, 0f, 0.18f, 0f)
+        Matrix.scaleM(modelMatrix, 0, 0.55f, 0.4f, 0.55f)
+        drawTorus(color = floatArrayOf(0.12f, 0.14f, 0.18f, 1.0f), emissive = 0.1f)
 
-        // 4. Visor (Dark Glossy Glass)
+        // 4. Head (White Ceramic Sphere)
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
-        Matrix.translateM(modelMatrix, 0, 0f, 0.52f, 0f)
+        Matrix.translateM(modelMatrix, 0, 0f, 0.54f, 0f)
         Matrix.rotateM(modelMatrix, 0, pose.headTiltX * 57.3f, 1f, 0f, 0f)
         Matrix.rotateM(modelMatrix, 0, pose.headTiltZ * 57.3f, 0f, 0f, 1f)
-        Matrix.translateM(modelMatrix, 0, 0f, 0.02f, 0.26f)
-        Matrix.scaleM(modelMatrix, 0, 0.30f, 0.18f, 0.18f)
-        drawSphere(color = floatArrayOf(0.06f, 0.07f, 0.11f, 0.95f), emissive = 0.2f)
+        Matrix.scaleM(modelMatrix, 0, 0.45f, 0.43f, 0.43f)
+        drawSphere(color = floatArrayOf(0.96f, 0.97f, 0.99f, 1.0f), emissive = 0.08f)
 
-        // 5. Left & Right Glowing Cyan Eyes
-        val eyeY = 0.54f
-        val eyeZ = 0.43f
-        val eyeScaleY = 0.055f * pose.eyeScaleY
-        val eyePupil = pose.eyePupilX * 0.03f
+        // 5. Visor (Obsidian Glossy Glass)
+        Matrix.setIdentityM(modelMatrix, 0)
+        applyGlobalTransform(modelMatrix, pose)
+        Matrix.translateM(modelMatrix, 0, 0f, 0.54f, 0f)
+        Matrix.rotateM(modelMatrix, 0, pose.headTiltX * 57.3f, 1f, 0f, 0f)
+        Matrix.rotateM(modelMatrix, 0, pose.headTiltZ * 57.3f, 0f, 0f, 1f)
+        Matrix.translateM(modelMatrix, 0, 0f, 0.02f, 0.27f)
+        Matrix.scaleM(modelMatrix, 0, 0.31f, 0.19f, 0.18f)
+        drawSphere(color = floatArrayOf(0.04f, 0.05f, 0.08f, 0.96f), emissive = 0.25f)
+
+        // 6. Holographic Cyan Eyes (Left & Right)
+        val eyeY = 0.56f
+        val eyeZ = 0.44f
+        val eyeScaleY = 0.06f * pose.eyeScaleY
+        val eyePupil = pose.eyePupilX * 0.035f
 
         // Left Eye
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
-        Matrix.translateM(modelMatrix, 0, -0.12f + eyePupil, eyeY, eyeZ)
-        Matrix.scaleM(modelMatrix, 0, 0.045f, eyeScaleY, 0.02f)
-        drawSphere(color = floatArrayOf(0.0f, 0.96f, 0.83f, 1.0f), emissive = pose.glowIntensity * 1.5f)
+        Matrix.translateM(modelMatrix, 0, -0.13f + eyePupil, eyeY, eyeZ)
+        Matrix.scaleM(modelMatrix, 0, 0.048f, eyeScaleY, 0.02f)
+        drawSphere(color = floatArrayOf(0.0f, 0.96f, 0.83f, 1.0f), emissive = pose.glowIntensity * 2.0f)
 
         // Right Eye
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
-        Matrix.translateM(modelMatrix, 0, 0.12f + eyePupil, eyeY, eyeZ)
-        Matrix.scaleM(modelMatrix, 0, 0.045f, eyeScaleY, 0.02f)
+        Matrix.translateM(modelMatrix, 0, 0.13f + eyePupil, eyeY, eyeZ)
+        Matrix.scaleM(modelMatrix, 0, 0.048f, eyeScaleY, 0.02f)
+        drawSphere(color = floatArrayOf(0.0f, 0.96f, 0.83f, 1.0f), emissive = pose.glowIntensity * 2.0f)
+
+        // Mouth Waveform (Cyan lip-sync waveform)
+        val mouthScale = 0.02f + (pose.mouthWaveAmp * 0.025f)
+        Matrix.setIdentityM(modelMatrix, 0)
+        applyGlobalTransform(modelMatrix, pose)
+        Matrix.translateM(modelMatrix, 0, 0f, 0.46f, 0.42f)
+        Matrix.scaleM(modelMatrix, 0, 0.08f, mouthScale, 0.015f)
         drawSphere(color = floatArrayOf(0.0f, 0.96f, 0.83f, 1.0f), emissive = pose.glowIntensity * 1.5f)
 
-        // 6. Left & Right Floating Ear Antennas
+        // 7. Side Winged Antennas & Glowing Cores
         val earTilt = pose.earAngleZ * 57.3f
-        // Left Ear
+        // Left Antenna
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
-        Matrix.translateM(modelMatrix, 0, -0.48f, 0.58f, 0f)
+        Matrix.translateM(modelMatrix, 0, -0.50f, 0.60f, 0f)
         Matrix.rotateM(modelMatrix, 0, -earTilt, 0f, 0f, 1f)
-        Matrix.scaleM(modelMatrix, 0, 0.09f, 0.09f, 0.09f)
-        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.3f)
+        Matrix.scaleM(modelMatrix, 0, 0.09f, 0.12f, 0.08f)
+        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.35f)
 
-        // Right Ear
+        // Right Antenna
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
-        Matrix.translateM(modelMatrix, 0, 0.48f, 0.58f, 0f)
+        Matrix.translateM(modelMatrix, 0, 0.50f, 0.60f, 0f)
         Matrix.rotateM(modelMatrix, 0, earTilt, 0f, 0f, 1f)
-        Matrix.scaleM(modelMatrix, 0, 0.09f, 0.09f, 0.09f)
-        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.3f)
+        Matrix.scaleM(modelMatrix, 0, 0.09f, 0.12f, 0.08f)
+        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.35f)
 
-        // 7. Levitating Thruster Ring (Cyan Emissive Torus)
+        // 8. Articulated Arms & Hands
+        // Left Arm (Resting or Celebratory)
+        val armLeftY = if (pose.rightHandY > 0.3f && stateMachine.currentEmotion == CharacterEmotion.CELEBRATING) 0.3f else 0f
+        Matrix.setIdentityM(modelMatrix, 0)
+        applyGlobalTransform(modelMatrix, pose)
+        Matrix.translateM(modelMatrix, 0, -0.42f, 0.02f + armLeftY, 0f)
+        Matrix.scaleM(modelMatrix, 0, 0.085f, 0.085f, 0.085f)
+        drawSphere(color = floatArrayOf(0.95f, 0.96f, 0.98f, 1.0f), emissive = 0.1f)
+
+        Matrix.setIdentityM(modelMatrix, 0)
+        applyGlobalTransform(modelMatrix, pose)
+        Matrix.translateM(modelMatrix, 0, -0.45f, -0.16f + armLeftY, 0.04f)
+        Matrix.scaleM(modelMatrix, 0, 0.065f, 0.065f, 0.075f)
+        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.2f)
+
+        // Right Arm (Interactive: Waving / Celebrating raised posture)
+        val armRightY = pose.rightHandY * 0.7f
+        Matrix.setIdentityM(modelMatrix, 0)
+        applyGlobalTransform(modelMatrix, pose)
+        Matrix.translateM(modelMatrix, 0, 0.42f, 0.02f + armRightY, 0.04f)
+        Matrix.scaleM(modelMatrix, 0, 0.085f, 0.085f, 0.085f)
+        drawSphere(color = floatArrayOf(0.95f, 0.96f, 0.98f, 1.0f), emissive = 0.1f)
+
+        Matrix.setIdentityM(modelMatrix, 0)
+        applyGlobalTransform(modelMatrix, pose)
+        Matrix.translateM(modelMatrix, 0, 0.45f, -0.16f + armRightY, 0.08f)
+        Matrix.scaleM(modelMatrix, 0, 0.065f, 0.065f, 0.075f)
+        drawSphere(color = floatArrayOf(0.72f, 0.57f, 1.0f, 1.0f), emissive = 0.2f)
+
+        // 9. Concentric Anti-Gravity Thruster Rings (Spinning Cyan Plasma)
         Matrix.setIdentityM(modelMatrix, 0)
         applyGlobalTransform(modelMatrix, pose)
         Matrix.translateM(modelMatrix, 0, 0f, -0.44f, 0f)
-        Matrix.rotateM(modelMatrix, 0, (timeSec * 45f) % 360f, 0f, 1f, 0f)
-        drawTorus(color = floatArrayOf(0.0f, 0.96f, 0.83f, 0.85f), emissive = pose.glowIntensity * 1.2f)
+        Matrix.rotateM(modelMatrix, 0, (timeSec * 50f) % 360f, 0f, 1f, 0f)
+        drawTorus(color = floatArrayOf(0.0f, 0.96f, 0.83f, 0.9f), emissive = pose.glowIntensity * 1.5f)
+
+        Matrix.setIdentityM(modelMatrix, 0)
+        applyGlobalTransform(modelMatrix, pose)
+        Matrix.translateM(modelMatrix, 0, 0f, -0.52f, 0f)
+        Matrix.rotateM(modelMatrix, 0, -(timeSec * 70f) % 360f, 0f, 1f, 0f)
+        Matrix.scaleM(modelMatrix, 0, 0.72f, 0.72f, 0.72f)
+        drawTorus(color = floatArrayOf(0.72f, 0.57f, 1.0f, 0.8f), emissive = 0.8f)
     }
 
     private fun applyGlobalTransform(matrix: FloatArray, pose: MascotPose) {
@@ -231,14 +282,18 @@ class CharacterRenderer(private val context: Context) : GLSurfaceView.Renderer {
                 // Diffuse
                 float diff = max(dot(vNormal, lightDir), 0.0);
                 
-                // Specular
-                vec3 reflectDir = reflect(-lightDir, vNormal);
-                float spec = pow(max(dot(viewDir, reflectDir), 0.0), 16.0);
+                // Blinn-Phong Specular
+                vec3 halfDir = normalize(lightDir + viewDir);
+                float spec = pow(max(dot(vNormal, halfDir), 0.0), 32.0);
                 
-                vec3 ambient = vec3(0.25, 0.28, 0.35);
-                vec3 lighting = ambient + diff * vec3(0.85) + spec * vec3(0.4);
+                // Fresnel Rim Glow for futuristic cyber aesthetics
+                float fresnel = pow(1.0 - max(dot(vNormal, viewDir), 0.0), 2.8);
+                vec3 rimGlow = vec3(0.0, 0.96, 0.83) * fresnel * 0.45;
                 
-                vec3 finalColor = uColor.rgb * lighting + (uColor.rgb * uEmissive);
+                vec3 ambient = vec3(0.22, 0.25, 0.32);
+                vec3 lighting = ambient + diff * vec3(0.85) + spec * vec3(0.55);
+                
+                vec3 finalColor = uColor.rgb * lighting + (uColor.rgb * uEmissive * 1.2) + rimGlow;
                 gl_FragColor = vec4(finalColor, uColor.a);
             }
         """.trimIndent()

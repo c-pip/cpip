@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwarmDroid — Multi-Agent AI Ecosystem for Android with 3D Companion Mascot</title>
+  <meta name="description" content="SwarmDroid is an advanced multi-agent AI ecosystem for Android featuring an adorable, fully animated 3D AI companion. One companion. An entire swarm of intelligence.">
+  <meta name="theme-color" content="#0A0C10">
+
+  <!-- OpenGraph & Twitter Cards -->
+  <meta property="og:title" content="SwarmDroid — Multi-Agent AI Ecosystem for Android">
+  <meta property="og:description" content="One companion. An entire swarm of intelligence. Autonomous collaborative agents with an animated 3D robot mascot.">
+  <meta property="og:image" content="assets/logo.png">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Three.js for Interactive 3D Companion Mascot -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Background Cyber Ambient Glow Orbs -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-lavender"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <img src="assets/logo.png" alt="SwarmDroid Logo" class="brand-logo">
+        <div class="brand-text">
+          <span class="brand-name">SwarmDroid</span>
+          <span class="brand-badge">v1.0 Android</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#mascot">3D Companion</a>
+        <a href="#swarm">Swarm Intelligence</a>
+        <a href="#agents">Agents</a>
+        <a href="#security">Security</a>
+        <a href="#developer">API & Docs</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://github.com/alaika-cyber/swarmdroid-" target="_blank" class="btn-github">
+          <svg class="icon-gh" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>Star on GitHub</span>
+        </a>
+        <a href="assets/app-debug.apk" class="btn-primary" download="SwarmDroid-v1.0.apk">
+          <svg class="icon-download" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          <span>Download APK</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="pill-badge">
+          <span class="pulse-dot"></span>
+          <span>Next-Gen Multi-Agent Mobile Ecosystem</span>
+        </div>
+        <h1 class="hero-title">
+          One Companion.<br>
+          <span class="text-gradient">An Entire Swarm</span><br>
+          of Intelligence.
+        </h1>
+        <p class="hero-subtitle">
+          Say goodbye to traditional static chatbots. SwarmDroid unites an autonomous swarm of specialized AI agents under an adorable, fully animated 3D companion robot that blinks, breathes, walks, waves, and visually collaborates on Android in real time.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="assets/app-debug.apk" class="btn-primary btn-large" download="SwarmDroid-v1.0.apk">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993s-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993s-.4482.9997-.9993.9997m11.4045-6.02l1.9967-3.4583a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4111 13.8533 8.0945 12 8.0945s-3.5902.3166-5.1362.8561L4.8415 5.4476a.416.416 0 00-.5676-.1521.416.416 0 00-.1521.5676l1.9967 3.4583C2.6889 11.1867.3432 14.6589 0 18.745h24c-.3432-4.0861-2.6889-7.5583-6.1185-9.4236"/>
+            </svg>
+            <span>Download for Android (APK)</span>
+          </a>
+          <a href="#mascot" class="btn-secondary btn-large">
+            <span>Explore 3D Mascot</span>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num">14</span>
+            <span class="stat-label">3D Animation States</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">8+</span>
+            <span class="stat-label">Specialized Agents</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Hardware Keystore Safe</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Interactive 3D Mascot Stage -->
+      <div class="hero-visual" id="mascot">
+        <div class="mascot-card">
+          <div class="mascot-header">
+            <div class="mascot-tag">
+              <span class="indicator-live"></span>
+              <span>LIVE 3D COMPANION MASCOT</span>
+            </div>
+            <div class="mascot-tip">Drag to rotate • Tap to celebrate</div>
+          </div>
+
+          <!-- WebGL 3D Canvas Container -->
+          <div id="companion-3d-stage" class="stage-container">
+            <!-- Speech Bubble Display -->
+            <div id="mascot-speech-bubble" class="speech-bubble">
+              "Hello! I am your SwarmDroid companion. The swarm is ready to collaborate!"
+            </div>
+          </div>
+
+          <!-- Emotional State Control Pills -->
+          <div class="emotion-controls">
+            <span class="control-label">Mascot State:</span>
+            <div class="pill-group">
+              <button class="pill-btn active" data-emotion="IDLE">Idle</button>
+              <button class="pill-btn" data-emotion="HAPPY">Happy</button>
+              <button class="pill-btn" data-emotion="THINKING">Thinking</button>
+              <button class="pill-btn" data-emotion="SPEAKING">Speaking</button>
+              <button class="pill-btn" data-emotion="WORKING">Working</button>
+              <button class="pill-btn" data-emotion="CELEBRATING">Celebrating</button>
+              <button class="pill-btn" data-emotion="SLEEPING">Sleeping</button>
+              <button class="pill-btn" data-emotion="WAVING">Waving</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Swarm Intelligence Visualizer -->
+  <section class="section swarm-section" id="swarm">
+    <div class="container">
+      <div class="section-badge">Autonomous Collaboration</div>
+      <h2 class="section-title">Watch the Swarm Collaborate in Real Time</h2>
+      <p class="section-desc">
+        Unlike single-turn chat assistants, SwarmDroid breaks user requests into Directed Acyclic Graph (DAG) task plans, dynamically delegates subtasks to specialized agents, and streams active thought signals.
+      </p>
+
+      <div class="swarm-simulator-card">
+        <div class="sim-toolbar">
+          <div class="sim-title">
+            <span class="badge-dot"></span>
+            <span>Live Swarm Node Graph & Signal Stream</span>
+          </div>
+          <div class="sim-presets">
+            <span>Try Preset Workflows:</span>
+            <button class="preset-btn active" data-flow="research_social">Research & Post to X</button>
+            <button class="preset-btn" data-flow="code_debug">Inspect Code & Sandbox Test</button>
+            <button class="preset-btn" data-flow="dynamic_agent">Dynamic Agent Spawning</button>
+          </div>
+        </div>
+
+        <div class="sim-stage">
+          <canvas id="swarm-canvas" width="900" height="420"></canvas>
+        </div>
+
+        <div class="sim-log-panel">
+          <div class="log-header">
+            <span class="log-title">Live Swarm Execution Log</span>
+            <button id="btn-run-simulation" class="btn-run">
+              <span class="icon-play">▶</span>
+              <span>Trigger Swarm Execution</span>
+            </button>
+          </div>
+          <div id="sim-log-stream" class="log-stream">
+            <div class="log-entry system"><span class="time">[00:00.00]</span> ⚡ Swarm engine initialized. Master Agent (Aegis Prime) ready.</div>
+            <div class="log-entry info"><span class="time">[00:00.01]</span> 🤖 3D companion mascot in IDLE state. Ready for user prompt.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 Animation States Showcase -->
+  <section class="section states-section">
+    <div class="container">
+      <div class="section-badge">Procedural Animation Engine</div>
+      <h2 class="section-title">14 Emotional States That Bring Intelligence to Life</h2>
+      <p class="section-desc">
+        Every agent event has a direct visual and emotional reaction on the 3D companion mascot. From attentive listening to triumphant task celebrations:
+      </p>
+
+      <div class="states-grid">
+        <div class="state-card" data-state="IDLE">
+          <div class="state-icon">🧘</div>
+          <div class="state-name">1. Idle</div>
+          <div class="state-desc">Gentle breathing sine wave, levitation bobbing, natural eye blinks.</div>
+        </div>
+        <div class="state-card" data-state="HAPPY">
+          <div class="state-icon">😊</div>
+          <div class="state-name">2. Happy</div>
+          <div class="state-desc">Smiling curved eye slits, ear twitches, and playful bouncy bob.</div>
+        </div>
+        <div class="state-card" data-state="THINKING">
+          <div class="state-icon">🤔</div>
+          <div class="state-name">3. Thinking</div>
+          <div class="state-desc">Inquisitive head tilt, left-to-right eye scan, pulsing antenna orb.</div>
+        </div>
+        <div class="state-card" data-state="LISTENING">
+          <div class="state-icon">👂</div>
+          <div class="state-name">4. Listening</div>
+          <div class="state-desc">Forward attentive posture with real-time soundwave audio reactivity.</div>
+        </div>
+        <div class="state-card" data-state="SPEAKING">
+          <div class="state-icon">🗣️</div>
+          <div class="state-name">5. Speaking</div>
+          <div class="state-desc">Visor mouth waveform modulated in real time with TTS audio amplitude.</div>
+        </div>
+        <div class="state-card" data-state="WORKING">
+          <div class="state-icon">⚙️</div>
+          <div class="state-name">6. Working</div>
+          <div class="state-desc">Focused forward posture, glowing swarm halo, orbiting particle ring.</div>
+        </div>
+        <div class="state-card" data-state="WALKING">
+          <div class="state-icon">🚶</div>
+          <div class="state-name">7. Walking</div>
+          <div class="state-desc">Procedural walk cycle with rhythmic foot/thruster tilts.</div>
+        </div>
+        <div class="state-card" data-state="RUNNING">
+          <div class="state-icon">🏃</div>
+          <div class="state-name">8. Running</div>
+          <div class="state-desc">Dynamic forward lean, speed lines, animated thruster flare.</div>
+        </div>
+        <div class="state-card" data-state="WAVING">
+          <div class="state-icon">👋</div>
+          <div class="state-name">9. Waving</div>
+          <div class="state-desc">Raised hand greeting cycle with friendly head nod.</div>
+        </div>
+        <div class="state-card highlight" data-state="CELEBRATING">
+          <div class="state-icon">🎉</div>
+          <div class="state-name">10. Celebrating</div>
+          <div class="state-desc">Joyful jump and spin, double hand cheer, celebratory glow flare.</div>
+        </div>
+        <div class="state-card" data-state="SLEEPING">
+          <div class="state-icon">😴</div>
+          <div class="state-name">11. Sleeping</div>
+          <div class="state-desc">Low float altitude, closed eye slits, deep relaxed breathing.</div>
+        </div>
+        <div class="state-card" data-state="ERROR">
+          <div class="state-icon">⚠️</div>
+          <div class="state-name">12. Error</div>
+          <div class="state-desc">Puzzled head scratch, amber eye flicker, concerned tilt.</div>
+        </div>
+        <div class="state-card" data-state="SURPRISED">
+          <div class="state-icon">😲</div>
+          <div class="state-name">13. Surprised</div>
+          <div class="state-desc">Sudden jump-back, dilated wide eyes (o.o), expanding aura.</div>
+        </div>
+        <div class="state-card" data-state="SAD">
+          <div class="state-icon">🥺</div>
+          <div class="state-name">14. Sad</div>
+          <div class="state-desc">Drooped ears, downward gaze, dim slow-pulsing glow.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialized Agents Roster -->
+  <section class="section agents-section" id="agents">
+    <div class="container">
+      <div class="section-badge">Swarm Architecture</div>
+      <h2 class="section-title">Specialized Autonomous Intelligence Units</h2>
+      <p class="section-desc">
+        Each agent possesses a distinct identity, system instructions, capability scope, permission boundary, and memory partition:
+      </p>
+
+      <div class="agents-grid">
+        <!-- Master Agent -->
+        <div class="agent-card master-card">
+          <div class="agent-badge">CENTRAL BRAIN</div>
+          <div class="agent-avatar">👑</div>
+          <h3 class="agent-name">Master Agent (Aegis Prime)</h3>
+          <p class="agent-role">Coordinator, Planner & Synthesizer</p>
+          <p class="agent-desc">Decomposes natural-language user prompts into a Directed Acyclic Graph (DAG) task plan, resolves dependencies, coordinates agents, and communicates with the 3D companion.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">DAG Planner</span>
+            <span class="tool-tag">Dynamic Spawner</span>
+            <span class="tool-tag">Synthesis</span>
+          </div>
+        </div>
+
+        <!-- Browser Agent -->
+        <div class="agent-card">
+          <div class="agent-avatar">🌐</div>
+          <h3 class="agent-name">Browser Agent (Aura Browser)</h3>
+          <p class="agent-role">Autonomous Web Research</p>
+          <p class="agent-desc">Crawls live web sources, extracts structured factual documentation, inspects links, and summarizes findings with verified citations.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">web_search</span>
+            <span class="tool-tag">fetch_url</span>
+          </div>
+        </div>
+
+        <!-- Communication Agent -->
+        <div class="agent-card">
+          <div class="agent-avatar">✉️</div>
+          <h3 class="agent-name">Communication Agent (Echo)</h3>
+          <p class="agent-role">Emails, Chats & Drafting</p>
+          <p class="agent-desc">Composes professional, empathetic emails and messages. Strictly triggers Human-in-the-Loop approvals before any message can be dispatched.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">draft_email</span>
+            <span class="tool-tag approval-tag">Human Approval</span>
+          </div>
+        </div>
+
+        <!-- Coding Agent -->
+        <div class="agent-card">
+          <div class="agent-avatar">💻</div>
+          <h3 class="agent-name">Coding Agent (ByteForge)</h3>
+          <p class="agent-role">Code Analysis & Sandbox Runner</p>
+          <p class="agent-desc">Writes clean Kotlin and Python, inspects code syntax, analyzes architecture, and verifies scripts within a restricted, safe sandbox.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">run_sandbox_code</span>
+            <span class="tool-tag">AST Checker</span>
+          </div>
+        </div>
+
+        <!-- Social Media Agent -->
+        <div class="agent-card">
+          <div class="agent-avatar">📱</div>
+          <h3 class="agent-name">Social Media Agent (Nexus)</h3>
+          <p class="agent-role">Viral Content & Calendars</p>
+          <p class="agent-desc">Generates high-engagement posts for X and LinkedIn, formats hashtags, and organizes content calendars with mandatory approval gates.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">draft_post</span>
+            <span class="tool-tag approval-tag">Human Approval</span>
+          </div>
+        </div>
+
+        <!-- Device Agent -->
+        <div class="agent-card">
+          <div class="agent-avatar">🤖</div>
+          <h3 class="agent-name">Device Agent (DroidLink)</h3>
+          <p class="agent-role">Android Integration Controller</p>
+          <p class="agent-desc">Interfaces with Android capabilities: launching approved applications, triggering text-to-speech, query battery/network, and share sheets.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">launch_app</span>
+            <span class="tool-tag">share_text</span>
+            <span class="tool-tag">device_settings</span>
+          </div>
+        </div>
+
+        <!-- Research Agent -->
+        <div class="agent-card">
+          <div class="agent-avatar">🔬</div>
+          <h3 class="agent-name">Research Agent (Chronos)</h3>
+          <p class="agent-role">Multi-Source Fact Checker</p>
+          <p class="agent-desc">Cross-references multiple data streams, performs fact verification, and stores structured research briefs in long-term shared memory.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">synthesize_sources</span>
+            <span class="tool-tag">Shared Memory</span>
+          </div>
+        </div>
+
+        <!-- Security Agent -->
+        <div class="agent-card">
+          <div class="agent-avatar">🛡️</div>
+          <h3 class="agent-name">Security Agent (Aegis Guardian)</h3>
+          <p class="agent-role">Prompt Defense & Secret Shield</p>
+          <p class="agent-desc">Scans prompts for injection and jailbreak attempts, verifies tool permission boundaries, redacts secrets from logs, and audits actions.</p>
+          <div class="agent-tools">
+            <span class="tool-tag">PromptDefense</span>
+            <span class="tool-tag">SecretRedactor</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security & Privacy Section -->
+  <section class="section security-section" id="security">
+    <div class="container">
+      <div class="security-box">
+        <div class="security-content">
+          <div class="section-badge">Defense-in-Depth</div>
+          <h2 class="section-title">Hardware-Backed Security. Zero Compromises.</h2>
+          <p class="section-desc">
+            SwarmDroid is designed from the silicon up to protect your privacy and credentials on mobile:
+          </p>
+          <div class="security-features">
+            <div class="sec-item">
+              <span class="sec-icon">🔐</span>
+              <div>
+                <h4>Android Keystore AES-256-GCM</h4>
+                <p>All AI provider credentials (Gemini, OpenAI, Anthropic) are hardware-encrypted on-device. Never stored in plain text.</p>
+              </div>
+            </div>
+            <div class="sec-item">
+              <span class="sec-icon">🛑</span>
+              <div>
+                <h4>Human-in-the-Loop Approvals</h4>
+                <p>Sensitive actions (sending emails, social posts, device changes) cannot execute without an interactive confirmation dialog.</p>
+              </div>
+            </div>
+            <div class="sec-item">
+              <span class="sec-icon">🛡️</span>
+              <div>
+                <h4>Prompt Injection Shield</h4>
+                <p>Continuous heuristic analysis intercepts instruction overrides, jailbreak payloads, and system exfiltration attempts.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="security-visual">
+          <div class="approval-preview-card">
+            <div class="preview-badge">🛡️ Human Approval Modal (Preview)</div>
+            <div class="preview-title">Communication Agent requests authorization</div>
+            <div class="preview-prompt">"Drafted email to team@example.com regarding launch schedule. Approve sending?"</div>
+            <div class="preview-actions">
+              <button class="btn-reject">Reject</button>
+              <button class="btn-approve">Approve Action ✓</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download APK Section -->
+  <section class="section download-section" id="download">
+    <div class="container">
+      <div class="download-card">
+        <div class="download-header">
+          <img src="assets/logo.png" alt="SwarmDroid Mascot" class="download-mascot">
+          <div>
+            <h2>Get SwarmDroid on Android</h2>
+            <p>Download the official APK and start interacting with your autonomous 3D companion.</p>
+          </div>
+        </div>
+
+        <div class="download-meta">
+          <div class="meta-item">
+            <span class="meta-label">Version</span>
+            <span class="meta-val">1.0.0 (Release)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">File Size</span>
+            <span class="meta-val">18.5 MB</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Android OS</span>
+            <span class="meta-val">Android 8.0+ (API 26-34)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">License</span>
+            <span class="meta-val">Apache 2.0 (Open Source)</span>
+          </div>
+        </div>
+
+        <div class="download-cta-row">
+          <a href="assets/app-debug.apk" class="btn-primary btn-large" download="SwarmDroid-v1.0.apk">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            <span>Download SwarmDroid APK (18.5 MB)</span>
+          </a>
+          <a href="https://github.com/alaika-cyber/swarmdroid-" target="_blank" class="btn-secondary btn-large">
+            <span>View Source on GitHub</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Developer & API Section -->
+  <section class="section dev-section" id="developer">
+    <div class="container">
+      <div class="section-badge">Developer Quickstart</div>
+      <h2 class="section-title">Built with Clean Architecture & Modern Stacks</h2>
+      <p class="section-desc">
+        FastAPI WebSocket streaming backend combined with Jetpack Compose Material 3 on Android.
+      </p>
+
+      <div class="code-tabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="python">Python Backend (FastAPI)</button>
+          <button class="tab-btn" data-tab="kotlin">Android Compose (Kotlin)</button>
+        </div>
+
+        <div id="tab-python" class="code-content active">
+          <pre><code><span class="kw">from</span> backend.orchestration.swarm_orchestrator <span class="kw">import</span> swarm_orchestrator
+
+<span class="comment"># Submit request to Master Agent & stream real-time events</span>
+response = <span class="kw">await</span> swarm_orchestrator.handle_user_request(
+    <span class="str">"Research the latest Android AI frameworks and draft an X post"</span>
+)
+
+<span class="comment"># Response returns companion emotional state and subtask results</span>
+print(response[<span class="str">"status"</span>])             <span class="comment"># "COMPLETED"</span>
+print(response[<span class="str">"companion_emotion"</span>]) <span class="comment"># "CELEBRATING"</span>
+print(response[<span class="str">"response_text"</span>])    <span class="comment"># Companion synthesis text</span></code></pre>
+        </div>
+
+        <div id="tab-kotlin" class="code-content">
+          <pre><code><span class="comment">// Embed the 3D Companion Mascot in any Jetpack Compose Screen</span>
+<span class="ann">@Composable</span>
+<span class="kw">fun</span> <span class="fn">CompanionScreen</span>(viewModel: SwarmViewModel) {
+    <span class="kw">val</span> emotion <span class="kw">by</span> viewModel.currentEmotion.collectAsState()
+    <span class="kw">val</span> speechAmplitude <span class="kw">by</span> viewModel.voiceManager.audioAmplitude.collectAsState()
+
+    Character3DView(
+        emotion = emotion,
+        speechAmplitude = speechAmplitude,
+        onTap = { viewModel.setEmotion(CharacterEmotion.CELEBRATING) }
+    )
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="SwarmDroid Logo" class="footer-logo">
+        <span class="footer-name">SwarmDroid</span>
+      </div>
+      <p class="footer-tagline">"One companion. An entire swarm of intelligence."</p>
+      <div class="footer-links">
+        <a href="https://github.com/alaika-cyber/swarmdroid-" target="_blank">GitHub</a>
+        <a href="docs/ARCHITECTURE.md">Architecture</a>
+        <a href="docs/PRD.md">PRD</a>
+        <a href="docs/SECURITY.md">Security</a>
+        <a href="docs/API.md">API</a>
+        <a href="LICENSE">Apache 2.0 License</a>
+      </div>
+      <p class="footer-copy">© 2026 SwarmDroid Open-Source Contributors. Released under the Apache 2.0 License.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/companion3d.js"></script>
+  <script src="js/swarm_simulator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
